@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="./bootstrap-5.0.2-dist/css/bootstrap.min.css">
+    <title>Consulta de Notas</title>
+    <script src="script.js" defer></script>
+</head>
+<body>
+    <div class="container d-flex justify-content-center align-items-center min-vh-100">
+        <div class="row border rounded-5 p-3 bg-white shadow box-area">
+            <div class="col-md-12">
+                <h2>Consulta de Notas</h2>
+                <hr>
+                <div id="notasTabela">
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th>Nome</th>
+                                <th>RGM</th>
+                                <th>Disciplina</th>
+                                <th>Nota 1</th>
+                                <th>Nota 2</th>
+                                <th>Média</th>
+                                <th>Resultado</th>
+                            </tr>
+                        </thead>
+                        <tbody id="tabelaNotas"></tbody>
+                    </table>
+                </div>
+                <button id="voltar" class="btn btn-secondary">Voltar</button>
+            </div>
+        </div>
+    </div>
+    <script>
+        window.onload = function() {
+            const notas = JSON.parse(localStorage.getItem("notas")) || [];
+            const tabelaNotas = document.getElementById("tabelaNotas");
+            
+            if (notas.length === 0) {
+                tabelaNotas.innerHTML = "<tr><td colspan='7'>Nenhuma nota registrada.</td></tr>";
+            } else {
+                notas.forEach(nota => {
+                    const row = document.createElement("tr");
+                    row.innerHTML = `
+                        <td>${nota.nome}</td>
+                        <td>${nota.rgm}</td>
+                        <td>${nota.disciplina}</td>
+                        <td>${nota.nota1}</td>
+                        <td>${nota.nota2}</td>
+                        <td>${nota.media}</td>
+                        <td>${nota.resultado}</td>
+                    `;
+                    tabelaNotas.appendChild(row);
+                });
+            }
+        };
+
+        document.getElementById("voltar").addEventListener("click", function() {
+            window.location.href = "lancarnotas.html";
+        });
+    </script>
+</body>
+</html>

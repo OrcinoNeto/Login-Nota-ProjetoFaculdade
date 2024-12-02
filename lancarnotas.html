@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="./bootstrap-5.0.2-dist/css/bootstrap.min.css">
+    <title>Lançamento de Notas</title>
+    <script src="script.js" defer></script>
+</head>
+<body>
+    <div class="container d-flex justify-content-center align-items-center min-vh-100">
+        <div class="row border rounded-5 p-3 bg-white shadow box-area">
+            <div class="col-md-12">
+                <h2>Lançamento de Notas</h2>
+                <form id="formNotas" class="mt-4">
+                    <div class="mb-3">
+                        <label for="nomeAluno" class="form-label">Nome do Aluno</label>
+                        <input type="text" class="form-control" id="nomeAluno" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="rgmAluno" class="form-label">RGM do Aluno</label>
+                        <input type="text" class="form-control" id="rgmAluno" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="disciplina" class="form-label">Disciplina</label>
+                        <input type="text" class="form-control" id="disciplina" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="nota1" class="form-label">Nota 1</label>
+                        <input type="number" class="form-control" id="nota1" max="6" min="0" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="nota2" class="form-label">Nota 2</label>
+                        <input type="number" class="form-control" id="nota2" max="6" min="0" required>
+                    </div>
+                    <div class="mb-3">
+                        <button type="submit" class="btn btn-primary">Salvar Notas</button>
+                    </div>
+                </form>
+                <hr>
+                <button id="verNotas" class="btn btn-info">Ver Notas</button>
+            </div>
+        </div>
+    </div>
+    <script>
+        document.getElementById("formNotas").addEventListener("submit", function(event) {
+            event.preventDefault();
+            
+            const nome = document.getElementById("nomeAluno").value;
+            const rgm = document.getElementById("rgmAluno").value;
+            const disciplina = document.getElementById("disciplina").value;
+            const nota1 = parseFloat(document.getElementById("nota1").value);
+            const nota2 = parseFloat(document.getElementById("nota2").value);
+            
+            let media = nota1 + nota2;
+            if (media > 10) media = 10;
+
+            const resultado = media >= 6 ? "Aprovado" : "Reprovado";
+
+            const dadosNota = {
+                nome,
+                rgm,
+                disciplina,
+                nota1,
+                nota2,
+                media,
+                resultado
+            };
+
+            let notas = JSON.parse(localStorage.getItem("notas")) || [];
+            notas.push(dadosNota);
+            localStorage.setItem("notas", JSON.stringify(notas));
+
+            alert("Notas salvas com sucesso!");
+            document.getElementById("formNotas").reset();
+        });
+
+        document.getElementById("verNotas").addEventListener("click", function() {
+            window.location.href = "vernotas.html";
+        });
+    </script>
+</body>
+</html>

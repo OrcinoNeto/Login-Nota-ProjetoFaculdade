@@ -62,7 +62,9 @@ document.getElementById('loginBtn').addEventListener('click', function() {
     const user = users.find(user => user.email === email && user.password === password);
 
     if (user) {
-        alert('Login bem-sucedido!');
+        alert('Login bem-sucedido!');        
+        window.location.href = "lancarnotas.html";
+        
     } else {
         alert('Email ou senha incorretos!');
     }
